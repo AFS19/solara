@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="{{ str_replace('_', '-', app()->getLocale()) }}" x-data="{ darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches) }" x-bind:class="darkMode ? 'dark' : ''">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -23,11 +23,26 @@
         [x-cloak] { display: none !important; }
         html { scroll-behavior: smooth; }
     </style>
+    <script>
+        // Prevent FOUC for dark mode
+        (function() {
+            const theme = localStorage.getItem('theme');
+            const prefersDark = window.matchMedia('(prefers-color-scheme: dark)').matches;
+            if (theme === 'dark' || (!theme && prefersDark)) {
+                document.documentElement.classList.add('dark');
+            }
+        })();
+    </script>
 </head>
 <body class="font-sans antialiased bg-white dark:bg-[#0d0d0d] text-gray-900 dark:text-[#f1f5f9] transition-colors duration-300">
     
     <!-- Navigation -->
-    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0d0d0d]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300" x-data="{ mobileMenuOpen: false }">
+    <nav class="fixed top-0 left-0 right-0 z-50 bg-white/80 dark:bg-[#0d0d0d]/80 backdrop-blur-md border-b border-gray-200 dark:border-gray-800 transition-colors duration-300"
+         x-data="{
+             mobileMenuOpen: false,
+             darkMode: localStorage.getItem('theme') === 'dark' || (!localStorage.getItem('theme') && window.matchMedia('(prefers-color-scheme: dark)').matches)
+         }"
+         x-init="$watch('mobileMenuOpen', value => { document.body.classList.toggle('overflow-hidden', value); }); $watch('darkMode', value => { document.documentElement.classList.toggle('dark', value); localStorage.setItem('theme', value ? 'dark' : 'light'); })">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
             <div class="flex items-center justify-between h-16">
                 <!-- Logo -->
@@ -53,8 +68,8 @@
                     </a>
                     
                     <!-- Theme Toggle -->
-                    <button 
-                        @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')"
+                    <button
+                        @click="darkMode = !darkMode"
                         class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                         aria-label="Toggle theme"
                     >
@@ -77,8 +92,8 @@
                 <!-- Mobile menu button -->
                 <div class="md:hidden flex items-center space-x-2">
                     <!-- Mobile Theme Toggle -->
-                    <button 
-                        @click="darkMode = !darkMode; localStorage.setItem('theme', darkMode ? 'dark' : 'light')"
+                    <button
+                        @click="darkMode = !darkMode"
                         class="p-2 rounded-lg text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors"
                         aria-label="Toggle theme"
                     >

@@ -82,6 +82,12 @@
     opacity: 0;
 }
 
+/* Touch-friendly 3D canvas */
+#hero-product-canvas canvas,
+#showcase-canvas canvas {
+    touch-action: pan-y;
+}
+
 /* Reduced motion */
 @media (prefers-reduced-motion: reduce) {
     .animate-on-scroll,

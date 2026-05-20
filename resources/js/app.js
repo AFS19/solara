@@ -1,8 +1,12 @@
 import '../css/components/animations.css';
 
+import Alpine from 'alpinejs';
 import { ProductScene } from './three/ProductScene.js';
-import ThemeManager from './theme.js';
 import ScrollAnimations from './scroll-animations.js';
+
+// Start Alpine.js
+window.Alpine = Alpine;
+Alpine.start();
 
 // Initialize when DOM is ready
 document.addEventListener('DOMContentLoaded', () => {
@@ -41,9 +45,6 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
-    
-    // Initialize theme manager
-    new ThemeManager();
     
     // Initialize scroll animations
     new ScrollAnimations();

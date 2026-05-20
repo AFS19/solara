@@ -68,7 +68,7 @@ export class ProductScene {
         this.renderer.setSize(this.container.clientWidth, this.container.clientHeight);
         this.renderer.setClearColor(0x000000, 0);
         this.renderer.shadowMap.enabled = true;
-        this.renderer.shadowMap.type = THREE.PCFSoftShadowMap;
+        this.renderer.shadowMap.type = THREE.PCFShadowMap;
         this.renderer.toneMapping = THREE.ACESFilmicToneMapping;
         this.renderer.toneMappingExposure = 1.0;
         
@@ -114,6 +114,18 @@ export class ProductScene {
         this.controls.maxPolarAngle = Math.PI / 1.8;
         this.controls.minAzimuthAngle = -Math.PI / 3;
         this.controls.maxAzimuthAngle = Math.PI / 3;
+        
+        // Touch-friendly: allow rotate with one finger
+        this.controls.touches = {
+            ONE: THREE.TOUCH.ROTATE,
+            TWO: THREE.TOUCH.DOLLY_PAN
+        };
+        
+        // Slow auto-rotate on touch devices
+        const isTouchDevice = window.matchMedia('(pointer: coarse)').matches;
+        if (isTouchDevice) {
+            this.controls.autoRotateSpeed = 0.5;
+        }
     }
     
     loadModel() {
