@@ -31,9 +31,10 @@ class ScrollAnimations {
         const selectors = [
             '.animate-on-scroll',
             '.animate-stagger',
-            '.animate-scale'
+            '.animate-scale',
+            '[data-animate]'
         ];
-        
+
         selectors.forEach(selector => {
             document.querySelectorAll(selector).forEach(el => {
                 this.observer.observe(el);

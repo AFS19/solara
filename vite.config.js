@@ -16,6 +16,11 @@ export default defineConfig({
         }),
         tailwindcss(),
     ],
+    resolve: {
+        alias: {
+            'three/addons/': 'three/examples/jsm/',
+        },
+    },
     server: {
         watch: {
             ignored: ['**/storage/framework/views/**'],

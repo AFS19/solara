@@ -1,48 +1,72 @@
 @php
-$testimonials = \App\Models\Testimonial::where('is_featured', true)->get();
+    $testimonials = \App\Models\Testimonial::where('is_active', true)
+        ->orderByDesc('created_at')
+        ->limit(6)
+        ->get();
 @endphp
 
-<section id="testimonials" class="py-24 px-4">
-    <div class="max-w-7xl mx-auto">
-        <div class="text-center mb-16 animate-on-scroll">
-            <h2 class="text-4xl md:text-5xl font-bold mb-4">What Our Clients Say</h2>
-            <p class="text-gray-400 text-lg">Trusted by industry leaders</p>
+<section id="testimonials" class="py-24 bg-gray-50 dark:bg-[#1a1a1a]">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <!-- Section Header -->
+        <div class="text-center mb-16" data-animate>
+            <h2 class="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white mb-4">
+                What Our Customers Say
+            </h2>
+            <p class="text-lg text-gray-600 dark:text-gray-400 max-w-2xl mx-auto">
+                Real reviews from real people loving their protected skin.
+            </p>
         </div>
-
-        <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 animate-stagger">
-            @forelse ($testimonials as $testimonial)
-                <div class="bg-white/5 border border-white/10 rounded-2xl p-8 relative hover:bg-white/10 transition">
-                    {{-- Quote icon --}}
-                    <svg class="absolute top-6 right-6 w-10 h-10 text-amber-500/30" fill="currentColor" viewBox="0 0 24 24">
-                        <path d="M14.017 21v-7.391c0-5.704 3.731-9.57 8.983-10.609l.995 2.151c-2.432.917-3.995 3.638-3.995 5.849h4v10h-9.983zm-14.017 0v-7.391c0-5.704 3.748-9.57 9-10.609l.996 2.151c-2.433.917-3.996 3.638-3.996 5.849h3.983v10h-9.983z"/>
-                    </svg>
-
-                    <p class="text-gray-300 text-lg mb-6 italic">"{{ $testimonial->quote }}"</p>
-
-                    <div class="flex items-center">
-                        @if ($testimonial->avatar)
-                            <img src="{{ Storage::url($testimonial->avatar) }}" 
-                                 alt="{{ $testimonial->author_name }}" 
-                                 class="w-12 h-12 rounded-full object-cover mr-4">
-                        @else
-                            <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-500 to-violet-500 flex items-center justify-center mr-4">
-                                <span class="text-white font-bold text-lg">{{ strtoupper(substr($testimonial->author_name, 0, 1)) }}</span>
+        
+        @if($testimonials->count() > 0)
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8">
+                @foreach($testimonials as $index => $testimonial)
+                    <div 
+                        class="bg-white dark:bg-[#0d0d0d] rounded-2xl p-6 lg:p-8 border border-gray-200 dark:border-gray-800 shadow-sm hover:shadow-lg hover:shadow-amber-500/5 transition-all duration-300"
+                        data-animate
+                        style="animation-delay: {{ $index * 100 }}ms"
+                    >
+                        <!-- Stars -->
+                        <div class="flex gap-1 mb-4">
+                            @for($i = 1; $i <= 5; $i++)
+                                <svg class="w-5 h-5 {{ $i <= $testimonial->rating ? 'text-amber-400' : 'text-gray-300 dark:text-gray-600' }}" fill="currentColor" viewBox="0 0 20 20">
+                                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"></path>
+                                </svg>
+                            @endfor
+                        </div>
+                        
+                        <!-- Quote -->
+                        <blockquote class="text-gray-700 dark:text-gray-300 leading-relaxed mb-6">
+                            "{{ $testimonial->quote }}"
+                        </blockquote>
+                        
+                        <!-- Author -->
+                        <div class="flex items-center gap-4">
+                            @if($testimonial->avatar)
+                                <img src="{{ Storage::url($testimonial->avatar) }}" alt="{{ $testimonial->author_name }}" class="w-12 h-12 rounded-full object-cover">
+                            @else
+                                <div class="w-12 h-12 rounded-full bg-gradient-to-br from-amber-400 to-amber-600 flex items-center justify-center text-white font-bold text-lg">
+                                    {{ strtoupper(substr($testimonial->author_name, 0, 1)) }}
+                                </div>
+                            @endif
+                            
+                            <div>
+                                <h4 class="font-semibold text-gray-900 dark:text-white">
+                                    {{ $testimonial->author_name }}
+                                </h4>
+                                @if($testimonial->skin_type)
+                                    <p class="text-sm text-amber-600 dark:text-amber-400">
+                                        {{ $testimonial->skin_type }} skin
+                                    </p>
+                                @endif
                             </div>
-                        @endif
-                        <div>
-                            <h4 class="font-bold">{{ $testimonial->author_name }}</h4>
-                            <p class="text-gray-400 text-sm">{{ $testimonial->company }}</p>
                         </div>
                     </div>
-                </div>
-            @empty
-                <div class="col-span-3 text-center text-gray-500 py-12">
-                    <svg class="w-16 h-16 mx-auto mb-4 text-gray-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M8 10h.01M12 10h.01M16 10h.01M9 16H5a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v8a2 2 0 01-2 2h-5l-5 5v-5z"/>
-                    </svg>
-                    No testimonials available yet.
-                </div>
-            @endforelse
-        </div>
+                @endforeach
+            </div>
+        @else
+            <div class="text-center py-20">
+                <p class="text-gray-500 dark:text-gray-400">No testimonials yet.</p>
+            </div>
+        @endif
     </div>
 </section>
