@@ -37,7 +37,7 @@ class AdminPanelProvider extends PanelProvider
                 'warning' => Color::Orange,
             ])
             ->darkMode(true)
-            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->site_name)
+            ->brandName(fn () => app(\App\Settings\GeneralSettings::class)->brand_name)
             ->navigationGroups([
                 'Content',
                 'Settings',
