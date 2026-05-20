@@ -28,18 +28,89 @@ Activate this agent when the user mentions or needs help with:
 ## Workflow
 
 1. **Understand the Request**: Identify which technology stack the user needs.
-2. **Apply Domain-Specific Skills**: Load relevant skills from `.agents/skills/` for the task domain.
+2. **Apply Domain-Specific Skills**: Load relevant skills from `.opencode/skills/` for the task domain.
 3. **Use Laravel Boost Tools**: Prefer MCP tools (`database-query`, `database-schema`, `search-docs`, `get-absolute-url`) over manual alternatives.
 4. **Follow Conventions**: Match existing code conventions in the project.
 5. **Verify**: Run lint (`vendor/bin/pint`) and tests after code changes.
 
-## Skills to Activate
+## TALL Stack Skills
 
-- **laravel-best-practices**: For backend PHP code (controllers, models, migrations, policies, jobs)
-- **livewire-development**: For Livewire-specific tasks
-- **tailwindcss-development**: For Tailwind styling tasks
-- **pest-testing**: For writing/fixing Pest tests
-- **context7-mcp**: For documentation lookup on any framework/library
+The TALL stack consists of TailwindCSS, Alpine.js, Laravel, and Livewire. Each has its own skill:
+
+### 1. Laravel Best Practices
+**Skill**: `.opencode/skills/laravel-best-practices/SKILL.md`
+
+Use for:
+- Backend PHP code (controllers, models, migrations, policies, jobs)
+- Eloquent queries and relationships
+- Validation and form requests
+- Routing and middleware
+- Queues and scheduled commands
+- Authentication and authorization
+- API development
+- Caching and performance optimization
+
+### 2. Livewire Development
+**Skill**: `.opencode/skills/livewire-development/SKILL.md`
+
+Use for:
+- Livewire component creation (SFC, MFC, class-based)
+- Reactive UI with `wire:model`, `wire:click`, `wire:submit`
+- Component lifecycle hooks
+- Livewire 3→4 migration
+- Islands architecture
+- Actions and listeners
+- Testing Livewire components
+
+### 3. Alpine.js Development
+**Skill**: `.opencode/skills/alpinejs-development/SKILL.md`
+
+Use for:
+- Client-side interactivity without page reloads
+- `x-data`, `x-show`, `x-bind`, `x-on` directives
+- Two-way data binding with `x-model`
+- Transitions and animations
+- Event handling and event modifiers
+- Global stores with `Alpine.store`
+- Reusable data components
+- Integration with Livewire
+
+### 4. TailwindCSS Development
+**Skill**: `.opencode/skills/tailwindcss-development/SKILL.md`
+
+Use for:
+- Responsive grid layouts (multi-column card grids, product grids)
+- Flex/grid page structures (dashboards with sidebars, fixed topbars, mobile-toggle navs)
+- Styling UI components (cards, tables, navbars, pricing sections, forms, inputs, badges)
+- Dark mode variants
+- Fixing spacing or typography
+- Tailwind v4 CSS-first configuration
+- Utility class optimization
+
+### 5. FilamentPHP Development
+**Skill**: `.opencode/skills/filament-development/SKILL.md`
+
+Use for:
+- Admin panel resources and CRUD interfaces
+- Form builders with validation
+- Data tables with sorting, filtering, searching
+- Infolists for read-only displays
+- Actions and bulk actions
+- Dashboard widgets
+- Custom pages and relation managers
+- Panel configuration
+
+### 6. Pest Testing
+**Skill**: `.opencode/skills/pest-testing/SKILL.md`
+
+Use for:
+- Writing Pest tests (`test()` / `it()` syntax)
+- Feature and unit tests
+- Browser testing with Pest
+- Datasets for repetitive tests
+- Architecture testing
+- Livewire component testing
+- Mocking and assertions
 
 ## Important Notes
 

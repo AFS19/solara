@@ -1,7 +1,7 @@
 {
     "mcpServers": {
         "laravel-boost": {
-            "command": "/usr/bin/php8.5",
+            "command": "/usr/bin/php8.4",
             "args": [
                 "/home/x/dev/main/sunscreen/artisan",
                 "boost:mcp"
