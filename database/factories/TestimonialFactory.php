@@ -17,15 +17,15 @@ class TestimonialFactory extends Factory
      */
     public function definition(): array
     {
-        $skinTypes = ['oily', 'dry', 'sensitive', 'combination', 'all'];
+        $skinTypes = ['all', 'sensitive', 'oily', 'dry'];
 
         return [
             'author_name' => fake()->name(),
             'skin_type' => fake()->randomElement($skinTypes),
             'quote' => fake()->paragraph(),
-            'rating' => fake()->numberBetween(4, 5),
+            'rating' => fake()->numberBetween(1, 5),
             'avatar' => null,
-            'is_active' => true,
+            'is_active' => fake()->boolean(80),
         ];
     }
 }

@@ -21,5 +21,12 @@ class DatabaseSeeder extends Seeder
             'name' => 'admin',
             'email' => 'admin@sunscreen.com',
         ]);
+
+        $this->call([
+            ProductSeeder::class,
+            IngredientSeeder::class,
+            TestimonialSeeder::class,
+            FaqSeeder::class,
+        ]);
     }
 }
